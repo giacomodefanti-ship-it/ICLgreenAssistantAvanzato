@@ -1548,11 +1548,7 @@
 
         const masterProductCatalog = [...productCatalog, ...pesticideCatalog, ...agronomicCatalog];
 
-        let fertRows = [
-            { period: "Mar - S1", family: "ProTurf", product: "High N", dose: 30, unit: "conf", cost: 42 },
-            { period: "Giu - S1", family: "ProTurf", product: "Spring/Summer", dose: 30, unit: "conf", cost: 40 },
-            { period: "Set - S1", family: "ProTurf", product: "High K", dose: 30, unit: "conf", cost: 43 }
-        ];
+        let fertRows = [];
 
         let quadernoRows = [];
         let savedQuaderno = localStorage.getItem('icl_quaderno_rows');
@@ -1561,7 +1557,7 @@
         }
         if (quadernoRows.length === 0) {
             quadernoRows = [
-                { date: "2026-03-02", operation: "Concimazione ProTurf High N", operator: "Mario Rossi", notes: "Ottime condizioni, terreno umido" }
+                { date: "2026-03-02", operation: "Fungicida Instrata", operator: "Mario Rossi", notes: "Ottime condizioni, terreno umido" }
             ];
         }
 
