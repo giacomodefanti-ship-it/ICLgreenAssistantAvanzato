@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -597,7 +597,7 @@
                             </div>
 
                             <div class="mb-2 p-2 bg-light rounded small" id="gpsStatusBox" style="font-size: 0.73rem;">
-                                <i class="fa-solid fa-circle-info text-info me-1"></i>Posizione predefinita: Casaleone (VR). Clicca "Rileva GPS" per aggiornare.
+                                <i class="fa-solid fa-circle-info text-info me-1"></i>Posizione predefinita: -- . Clicca "Rileva GPS" per aggiornare.
                             </div>
 
                             <div class="row g-2 mb-3">
@@ -660,13 +660,13 @@
                                 
                                 <div class="result-box mb-3">
                                     <div class="text-muted small fw-bold text-uppercase" style="font-size: 0.68rem;">Bilancio Idrico Settimanale (Lordo - Pioggia)</div>
-                                    <div id="weeklyWaterDisp" class="fs-4 fw-bold text-secondary">35.0 litri / mq</div>
+                                    <div id="weeklyWaterDisp" class="fs-4 fw-bold text-secondary">35.0 mm / mq</div>
                                     <div class="text-muted small" id="effectiveRainDisp" style="font-size: 0.72rem;">Pioggia efficace detratta: 0 mm</div>
                                 </div>
 
                                 <div class="result-box mb-3" style="border-left-color: #10b981;">
                                     <div class="text-muted small fw-bold text-uppercase" style="font-size: 0.68rem;">Fabbisogno Irriguo Netto (Settimanale)</div>
-                                    <div id="netWeeklyWaterDisp" class="fs-3 fw-bold text-success">35.0 litri / mq</div>
+                                    <div id="netWeeklyWaterDisp" class="fs-3 fw-bold text-success">35.0 mm / mq</div>
                                     <div class="text-muted small" id="totalVolumeDisp" style="font-size: 0.72rem;">Volume totale mancante per la superficie</div>
                                 </div>
 
@@ -1137,8 +1137,8 @@
                 <div class="card card-custom">
                     <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
                         <div>
-                            <h2 class="h6 fw-bold mb-1" style="color: var(--py-primary) !important;"><i class="fa-solid fa-seedling me-1" aria-hidden="true"></i>Pyricularia Grisea - ITM</h2>
-                            <p class="small text-muted mb-0" style="font-size: 0.75rem;">Modello agrometeorologico per Zoysia e Lolium.</p>
+                            <h2 class="h6 fw-bold mb-1" style="color: var(--py-primary) !important;"><i class="fa-solid fa-seedling me-1" aria-hidden="true"></i>Pyricularia Grisea - ITM (Geolocalizzato)</h2>
+                            <p class="small text-muted mb-0" style="font-size: 0.75rem;">Modello agrometeorologico per Zoysia e Lolium basato su coordinate GPS live.</p>
                         </div>
                         <button class="btn btn-primary btn-sm py-1 rounded-pill" style="font-size: 0.75rem;" onclick="fetchWeatherData()">
                             <i class="fa-solid fa-location-crosshairs me-1" aria-hidden="true"></i> Aggiorna Meteo GPS
@@ -1152,28 +1152,52 @@
                     <div class="row g-2 mb-3">
                         <div class="col-md-4">
                             <div class="card p-2 border-0 bg-light text-center h-100 mb-0">
-                                <div class="text-muted small fw-bold text-uppercase mb-1" style="font-size: 0.68rem;">Stato Allerta</div>
+                                <div class="text-muted small fw-bold text-uppercase mb-1" style="font-size: 0.68rem;">Indice di Rischio (ITM)</div>
                                 <div id="pyRiskIndex" class="fs-3 fw-bold text-secondary">-- / 100</div>
                                 <div id="pyRiskBadgeContainer" class="mt-1"><span class="badge bg-secondary" style="font-size: 0.7rem;">In attesa...</span></div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card p-2 border-0 bg-light h-100 mb-0" style="font-size: 0.8rem;">
-                                <div class="text-muted small fw-bold text-uppercase mb-1" style="font-size: 0.68rem;">Parametri Meteo</div>
+                                <div class="text-muted small fw-bold text-uppercase mb-1" style="font-size: 0.68rem;">Parametri Meteo GPS</div>
                                 <div class="mt-1">
-                                    <div class="d-flex justify-content-between"><span>Temp. Media:</span> <strong id="pyAvgTemp">-- °C</strong></div>
-                                    <div class="d-flex justify-content-between"><span>Umidità (RH):</span> <strong id="pyAvgRh">-- %</strong></div>
-                                    <div class="d-flex justify-content-between"><span>Target:</span> <span class="text-dark fw-bold">Pyricularia</span></div>
+                                    <div class="d-flex justify-content-between"><span>Temp. Media (5gg):</span> <strong id="pyAvgTemp">-- °C</strong></div>
+                                    <div class="d-flex justify-content-between"><span>Umidità (RH 5gg):</span> <strong id="pyAvgRh">-- %</strong></div>
+                                    <div class="d-flex justify-content-between"><span>Pioggia Tot. (7gg):</span> <strong id="pyRainTot">-- mm</strong></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card p-2 border-0 bg-light h-100 mb-0" style="font-size: 0.78rem;">
-                                <div class="text-muted small fw-bold text-uppercase mb-1" style="font-size: 0.68rem;">Linee Guida</div>
+                                <div class="text-muted small fw-bold text-uppercase mb-1" style="font-size: 0.68rem;">Soglia di Attenzione</div>
                                 <div class="mt-1 text-muted">
-                                    Evitare azoto pronto effetto su specie sensibili nei periodi caldi.
+                                    Soglia critica fissata a <strong>> 50 / 100</strong> con temperature ottimali 24-32°C.
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-2 border-0 bg-light shadow-sm mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h3 class="h6 fw-bold text-secondary mb-0" style="font-size: 0.82rem;"><i class="fa-solid fa-chart-area me-1" aria-hidden="true"></i>Andamento Indice Pyricularia (Ultimi 14 Giorni)</h3>
+                        </div>
+                        <div style="height: 220px; position: relative;" class="mb-3">
+                            <canvas id="pyriculariaChart"></canvas>
+                        </div>
+                        <h4 class="h6 fw-bold text-secondary mb-2" style="font-size: 0.8rem;"><i class="fa-solid fa-table-list me-1"></i>Riepilogo Numerico Rischio Pyricularia</h4>
+                        <div class="table-responsive" style="max-height: 150px; overflow-y: auto;">
+                            <table class="table table-sm table-striped table-bordered mb-0" style="font-size: 0.75rem;" id="pyNumericTable">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Indice Pyricularia (0-100)</th>
+                                        <th>Stato</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pyNumericTableBody">
+                                    <tr><td colspan="3" class="text-center text-muted">In attesa di caricamento dati meteo...</td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -1574,6 +1598,7 @@
         let dsChartObj = null;
         let microdochiumChartObj = null;
         let brownPatchChartObj = null;
+        let pyriculariaChartObj = null;
         let gpChartObj = null;
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -1964,6 +1989,11 @@
 
         async function getMeteoFromApi(lat, lng, locationName) {
             let statusBox = document.getElementById("gpsStatusBox");
+            let locNameElement = document.getElementById("locName");
+            if (locNameElement) {
+                locNameElement.innerText = locationName;
+            }
+
             try {
                 let response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=et0_fao_evapotranspiration,precipitation_sum,temperature_2m_max,temperature_2m_min&past_days=1&forecast_days=1`);
                 let data = await response.json();
@@ -2352,6 +2382,7 @@
         function processPathogenModels(daily) {
             let temps = daily.temperature_2m_mean;
             let rhs = daily.relative_humidity_2m_mean;
+            let rains = daily.precipitation_sum || Array(temps.length).fill(0);
             let rawDates = daily.time ? daily.time.slice(-14) : [];
             
             let formattedDates = rawDates.map(dateStr => {
@@ -2362,8 +2393,11 @@
 
             let last5T = temps.slice(temps.length - 7, temps.length - 2);
             let last5Rh = rhs.slice(rhs.length - 7, rhs.length - 2);
+            let last7Rain = rains.slice(rains.length - 7);
+            
             let avgT5 = last5T.reduce((a,b)=>a+b, 0) / last5T.length;
             let avgRh5 = last5Rh.reduce((a,b)=>a+b, 0) / last5Rh.length;
+            let totRain7 = last7Rain.reduce((a,b)=>a+b, 0);
 
             let dsVals = temps.map((t, i) => {
                 let rh = rhs[i];
@@ -2420,6 +2454,57 @@
             document.getElementById("bpProbabilityVal").innerText = bpCurrent + "%";
             document.getElementById("bpRiskBadge").innerHTML = getRiskBadgeHtml(bpCurrent, 55);
             updateChartWithDates(brownPatchChartObj, formattedDates, bpVals.slice(-14), "Brown Patch (%)");
+
+            let pyVals = temps.map((t, i) => {
+                let rh = rhs[i];
+                let rain = rains[i] || 0;
+                let tempFactor = (t >= 20 && t <= 34) ? Math.max(0, 100 - Math.abs(t - 28) * 12) : 10;
+                let humidityFactor = rh / 100;
+                let rainBonus = rain > 1 ? 15 : 0;
+                let risk = (tempFactor * humidityFactor) + rainBonus;
+                return Math.min(100, Math.max(5, Math.round(risk)));
+            });
+            let pyCurrent = pyVals[pyVals.length - 1];
+
+            document.getElementById("pyAvgTemp").innerText = avgT5.toFixed(1) + " °C";
+            document.getElementById("pyAvgRh").innerText = avgRh5.toFixed(0) + " %";
+            document.getElementById("pyRainTot").innerText = totRain7.toFixed(1) + " mm";
+            document.getElementById("pyRiskIndex").innerText = pyCurrent + " / 100";
+            
+            let pyRiskBadgeContainer = document.getElementById("pyRiskBadgeContainer");
+            let pyStatusBox = document.getElementById("pyStatusBox");
+            if (pyCurrent >= 55) {
+                pyRiskBadgeContainer.innerHTML = '<span class="badge bg-danger" style="font-size: 0.7rem;">Rischio Alto (Pyricularia)</span>';
+                pyStatusBox.className = "p-2 mb-2 rounded border fw-bold text-center bg-danger text-white";
+                pyStatusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation me-1"></i>ALLARME PYRICULARIA: Condizioni meteo GPS altamente favorevoli all'infezione (${pyCurrent}/100)!`;
+            } else if (pyCurrent >= 30) {
+                pyRiskBadgeContainer.innerHTML = '<span class="badge bg-warning text-dark" style="font-size: 0.7rem;">Rischio Moderato</span>';
+                pyStatusBox.className = "p-2 mb-2 rounded border fw-bold text-center bg-warning text-dark";
+                pyStatusBox.innerHTML = `<i class="fa-solid fa-circle-exclamation me-1"></i>Attenzione: Rischio moderato (${pyCurrent}/100) per Zoysia e Lolium. Monitorare umidità e azoto.`;
+            } else {
+                pyRiskBadgeContainer.innerHTML = '<span class="badge bg-success" style="font-size: 0.7rem;">Rischio Basso</span>';
+                pyStatusBox.className = "p-2 mb-2 rounded border fw-bold text-center bg-success text-white";
+                pyStatusBox.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i>Condizioni attuali favorevoli o stabili per Pyricularia (${pyCurrent}/100).`;
+            }
+
+            updateChartWithDates(pyriculariaChartObj, formattedDates, pyVals.slice(-14), "Indice Pyricularia");
+
+            let pyNumericBody = document.getElementById("pyNumericTableBody");
+            if (pyNumericBody) {
+                pyNumericBody.innerHTML = "";
+                let sliceDates = formattedDates.slice(-14);
+                let sliceVals = pyVals.slice(-14);
+                for(let i = 0; i < sliceDates.length; i++) {
+                    let val = sliceVals[i];
+                    let badgeClass = val >= 55 ? 'bg-danger' : (val >= 30 ? 'bg-warning text-dark' : 'bg-success');
+                    let statusText = val >= 55 ? 'Alto' : (val >= 30 ? 'Moderato' : 'Basso');
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${sliceDates[i]}</td><td class="fw-bold">${val} / 100</td><td><span class="badge ${badgeClass}" style="font-size: 0.65rem;">${statusText}</span></td>`;
+                    pyNumericBody.appendChild(tr);
+                }
+            }
+
+            document.getElementById("pyLocationInfo").innerText = `Modello integrato ITM (Turf Toolbox) - Dati live geolocalizzati (Lat: ${currentLat.toFixed(2)}, Lng: ${currentLng.toFixed(2)}).`;
         }
 
         function getRiskBadgeHtml(val, threshold) {
@@ -2667,6 +2752,7 @@
             dsChartObj = createLineChart('dsChart', '#d97706');
             microdochiumChartObj = createLineChart('microdochiumChart', '#0284c7');
             brownPatchChartObj = createLineChart('brownPatchChart', '#b45309');
+            pyriculariaChartObj = createLineChart('pyriculariaChart', '#008542');
 
             let ctxGp = document.getElementById('gpChart').getContext('2d');
             gpChartObj = new Chart(ctxGp, {
